@@ -19,13 +19,16 @@
     "scripts": {
         "test": "karma start karma.conf.js",
         "gulp": "gulp",
-        "karma": "karma"
+        "karma": "karma",
+        "build": "gulp compress"
     },
     "dependencies": {
         "angular": "^1.4.7",
         "angular-resource": "1.5.3"
     },
     "devDependencies": {
+        "gulp-concat": "2.6.0",
+        "gulp-minify": "0.0.11",
         "angular-mocks": "^1.4.9",
         "concurrently": "^1.0.0",
         "gulp": "^3.9.1",
