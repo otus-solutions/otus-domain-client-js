@@ -24,7 +24,8 @@
     },
     "dependencies": {
         "angular": "^1.4.7",
-        "angular-resource": "1.5.3"
+        "angular-resource": "1.5.3",
+        "gulp-sonar": "2.1.0"
     },
     "devDependencies": {
         "gulp-concat": "2.6.0",
