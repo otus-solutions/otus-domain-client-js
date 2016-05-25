@@ -11,4 +11,4 @@
 npm-debug.log
 **/unit-result.report.html
 **/node_modules/
-
+**/.sonar
