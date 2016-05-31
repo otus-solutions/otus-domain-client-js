@@ -17,6 +17,21 @@
         self.getAuthenticatorResource = getAuthenticatorResource;
         self.getUserResource = getUserResource;
         self.getRepositoryResource = getRepositoryResource;
+        self.setHostname = setHostname;
+        self.setContext = setContext;
+        self.setVersion = setVersion;
+
+        function setHostname(hostname) {
+            HOSTNAME = hostname;
+        }
+
+        function setContext(context) {
+            CONTEXT = '/' + context;
+        }
+
+        function setVersion(version) {
+            VERSION = '/' + version;
+        }
 
         function getRestPrefix() {
             return HOSTNAME + CONTEXT + VERSION;
