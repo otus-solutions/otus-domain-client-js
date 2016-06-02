@@ -13,31 +13,49 @@
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create(restPrefix, token) {
             return $resource({}, {}, {
                 validateConnection: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/connection'
+                    url: restPrefix + SUFFIX + '/validate/connection',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 validateCredentials: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/credentials'
+                    url: restPrefix + SUFFIX + '/validate/credentials',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 validateDatabase: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/validate/database'
+                    url: restPrefix + SUFFIX + '/validate/database',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 getByRepositoryName: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/get'
+                    url: restPrefix + SUFFIX + '/get',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 connect: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/connect'
+                    url: restPrefix + SUFFIX + '/connect',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 create: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/create'
+                    url: restPrefix + SUFFIX + '/create',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 }
             });
         }

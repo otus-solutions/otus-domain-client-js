@@ -13,15 +13,21 @@
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create(restPrefix, token) {
             return $resource({}, {}, {
                 authenticate: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 invalidate: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/invalidate'
+                    url: restPrefix + SUFFIX + '/invalidate',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 }
             });
         }

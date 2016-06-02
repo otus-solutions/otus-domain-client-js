@@ -13,31 +13,49 @@
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create(restPrefix, token) {
             return $resource({}, {}, {
                 exists: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/exists'
+                    url: restPrefix + SUFFIX + '/exists',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 create: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 logged: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 fetch: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/fetch'
+                    url: restPrefix + SUFFIX + '/fetch',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 enable: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/enable'
+                    url: restPrefix + SUFFIX + '/enable',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 },
                 disable: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/disable'
+                    url: restPrefix + SUFFIX + '/disable',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
                 }
             });
         }
