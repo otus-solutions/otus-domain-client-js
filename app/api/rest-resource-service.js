@@ -5,9 +5,9 @@
         .module('otusDomainClient')
         .service('RestResourceService', RestResourceService);
 
-    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory'];
+    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory', 'OtusProjectResourceFactory'];
 
-    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory) {
+    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory, OtusProjectResourceFactory) {
         var HOSTNAME = 'http://' + window.location.hostname;
         var CONTEXT = '/otus-domain-rest';
         var VERSION = '/v01';
@@ -17,9 +17,11 @@
         self.getAuthenticatorResource = getAuthenticatorResource;
         self.getUserResource = getUserResource;
         self.getRepositoryResource = getRepositoryResource;
+        self.getOtusProjectResource = getOtusProjectResource;
         self.setHostname = setHostname;
         self.setContext = setContext;
         self.setVersion = setVersion;
+
 
         function setHostname(hostname) {
             HOSTNAME = hostname;
@@ -67,6 +69,11 @@
         function getRepositoryResource() {
             var prefix = getRestPrefix();
             return RepositoryResourceFactory.create(prefix);
+        }
+
+        function getOtusProjectResource() {
+            var prefix = getRestPrefix();
+            return OtusProjectResourceFactory.create(prefix);
         }
 
     }
