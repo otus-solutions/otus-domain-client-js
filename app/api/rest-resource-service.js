@@ -5,13 +5,12 @@
         .module('otusDomainClient')
         .service('RestResourceService', RestResourceService);
 
-    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory'];
+    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory', '$window'];
 
-    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory) {
+    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory, $window) {
         var HOSTNAME = 'http://' + window.location.hostname;
         var CONTEXT = '/otus-domain-rest';
         var VERSION = '/v01';
-        var token;
 
         var self = this;
         self.getInstallerResource = getInstallerResource;
@@ -24,7 +23,7 @@
         self.setSecurityToken = setSecurityToken;
 
         function setSecurityToken(securityToken) {
-            token = securityToken;
+            $window.sessionStorage.setItem('token', securityToken);
         }
 
         function setHostname(hostname) {
@@ -57,22 +56,22 @@
 
         function getInstallerResource() {
             var prefix = getRestPrefix();
-            return InstallerResourceFactory.create(prefix, token);
+            return InstallerResourceFactory.create(prefix);
         }
 
         function getAuthenticatorResource() {
             var prefix = getRestPrefix();
-            return AuthenticatorResourceFactory.create(prefix, token);
+            return AuthenticatorResourceFactory.create(prefix);
         }
 
         function getUserResource() {
             var prefix = getRestPrefix();
-            return UserResourceFactory.create(prefix, token);
+            return UserResourceFactory.create(prefix);
         }
 
         function getRepositoryResource() {
             var prefix = getRestPrefix();
-            return RepositoryResourceFactory.create(prefix, token);
+            return RepositoryResourceFactory.create(prefix);
         }
     }
 

@@ -5,56 +5,56 @@
         .module('otusDomainClient')
         .factory('UserResourceFactory', UserResourceFactory);
 
-    UserResourceFactory.$inject = ['$resource'];
+    UserResourceFactory.$inject = ['$resource', '$window'];
 
-    function UserResourceFactory($resource) {
+    function UserResourceFactory($resource, $window) {
         var SUFFIX = '/user';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix, token) {
+        function create(restPrefix) {
             return $resource({}, {}, {
                 exists: {
                     method: 'GET',
                     url: restPrefix + SUFFIX + '/exists',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 },
                 create: {
                     method: 'POST',
                     url: restPrefix + SUFFIX,
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 },
                 logged: {
                     method: 'GET',
                     url: restPrefix + SUFFIX,
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 },
                 fetch: {
                     method: 'GET',
                     url: restPrefix + SUFFIX + '/fetch',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 },
                 enable: {
                     method: 'POST',
                     url: restPrefix + SUFFIX + '/enable',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 },
                 disable: {
                     method: 'POST',
                     url: restPrefix + SUFFIX + '/disable',
                     headers: {
-                        'Authorization': 'Bearer ' + token
+                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
                     }
                 }
             });
