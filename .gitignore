@@ -8,7 +8,8 @@
 *.iml
 *.swp
 *.swo
-npm-debug.log
 **/unit-result.report.html
 **/node_modules/
-**/.sonar
+**/env.properties
+/**/npm-debug.log.*
+.sonar
