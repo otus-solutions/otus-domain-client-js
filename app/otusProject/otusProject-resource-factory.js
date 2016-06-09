@@ -19,6 +19,10 @@
                 register: {
                     method: 'POST',
                     url: restPrefix + SUFFIX + '/register'
+                },
+                fetchAll: {
+                    method: 'GET',
+                    url: restPrefix + SUFFIX
                 }
             });
         }
