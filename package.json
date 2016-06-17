@@ -24,10 +24,10 @@
     },
     "dependencies": {
         "angular": "^1.4.7",
-        "angular-resource": "1.5.3",
-        "gulp-sonar": "2.1.0"
+        "angular-resource": "1.5.3"
     },
     "devDependencies": {
+        "gulp-sonar": "2.1.0",
         "gulp-concat": "2.6.0",
         "gulp-minify": "0.0.11",
         "angular-mocks": "^1.4.9",
