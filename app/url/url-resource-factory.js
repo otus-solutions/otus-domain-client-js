@@ -5,19 +5,19 @@
         .module('otusDomainClient')
         .factory('UrlResourceFactory', UrlResourceFactory);
 
-    UrlResourceFactory.$inject = ['$resource'];
+    UrlResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
 
-    function UrlResourceFactory($resource) {
+    function UrlResourceFactory($resource, DomainRestResourceContext) {
         var SUFFIX = '/url';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
             return $resource({}, {}, {
                 isValidDomain: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX
                 }
             });
         }

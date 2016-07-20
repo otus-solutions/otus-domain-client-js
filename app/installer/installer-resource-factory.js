@@ -5,35 +5,35 @@
         .module('otusDomainClient')
         .factory('InstallerResourceFactory', InstallerResourceFactory);
 
-    InstallerResourceFactory.$inject = ['$resource', '$window'];
+    InstallerResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
 
-    function InstallerResourceFactory($resource, $window) {
+    function InstallerResourceFactory($resource, DomainRestResourceContext) {
         var SUFFIX = '/installer';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
             return $resource({}, {}, {
                 ready: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/ready',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/ready',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 validation: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validation',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validation',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 config: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX,
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 }
             });

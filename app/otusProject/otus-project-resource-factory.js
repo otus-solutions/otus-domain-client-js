@@ -6,28 +6,28 @@
         .module('otusDomainClient')
         .factory('OtusProjectResourceFactory', OtusProjectResourceFactory);
 
-    OtusProjectResourceFactory.$inject = ['$resource', '$window'];
+    OtusProjectResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
 
-    function OtusProjectResourceFactory($resource, $window) {
+    function OtusProjectResourceFactory($resource, DomainRestResourceContext) {
         var SUFFIX = '/otus';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
             return $resource({}, {}, {
                 register: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/register',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/register',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 fetchAll: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX,
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 }
             });

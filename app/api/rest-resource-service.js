@@ -5,87 +5,50 @@
         .module('otusDomainClient')
         .service('RestResourceService', RestResourceService);
 
-    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory', 'OtusProjectResourceFactory', 'UrlResourceFactory', '$window'];
+    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory', 'OtusProjectResourceFactory', 'UrlResourceFactory', 'DomainRestResourceContext'];
 
-    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory, OtusProjectResourceFactory, UrlResourceFactory, $window) {
-        var HOSTNAME = 'http://' + window.location.hostname;
-        var CONTEXT = '/otus-domain-rest';
-        var VERSION = '/v01';
-
+    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory, OtusProjectResourceFactory, UrlResourceFactory, DomainRestResourceContext) {
         var self = this;
         self.getInstallerResource = getInstallerResource;
         self.getAuthenticatorResource = getAuthenticatorResource;
         self.getUserResource = getUserResource;
         self.getRepositoryResource = getRepositoryResource;
         self.getOtusProjectResource = getOtusProjectResource;
-	self.getUrlResource = getUrlResource;
-        self.setHostname = setHostname;
-        self.setContext = setContext;
-        self.setVersion = setVersion;
+        self.getUrlResource = getUrlResource;
         self.setSecurityToken = setSecurityToken;
+	self.removeSecurityToken = removeSecurityToken;
 
         function setSecurityToken(securityToken) {
-            $window.sessionStorage.setItem('token', securityToken);
+            DomainRestResourceContext.setSecurityToken(securityToken);
         }
 
-        function setHostname(hostname) {
-            HOSTNAME = hostname;
-        }
-
-        function setContext(context) {
-            CONTEXT = '/' + context;
-        }
-
-        function setVersion(version) {
-            VERSION = '/' + version;
-        }
-
-        function getRestPrefix() {
-            return HOSTNAME + CONTEXT + VERSION;
-        }
-
-        function getHostName() {
-            return HOSTNAME;
-        }
-
-        function getContext() {
-            return CONTEXT;
-        }
-
-        function getVersion() {
-            return VERSION;
+        function removeSecurityToken() {
+            DomainRestResourceContext.removeSecurityToken();
         }
 
         function getInstallerResource() {
-            var prefix = getRestPrefix();
-            return InstallerResourceFactory.create(prefix);
+            return InstallerResourceFactory.create();
         }
 
         function getAuthenticatorResource() {
-            var prefix = getRestPrefix();
-            return AuthenticatorResourceFactory.create(prefix);
+            return AuthenticatorResourceFactory.create();
         }
 
         function getUserResource() {
-            var prefix = getRestPrefix();
-            return UserResourceFactory.create(prefix);
+            return UserResourceFactory.create();
         }
 
         function getRepositoryResource() {
-            var prefix = getRestPrefix();
-            return RepositoryResourceFactory.create(prefix);
+            return RepositoryResourceFactory.create();
         }
 
         function getOtusProjectResource() {
-            var prefix = getRestPrefix();
-            return OtusProjectResourceFactory.create(prefix);
+            return OtusProjectResourceFactory.create();
         }
 
         function getUrlResource() {
-            var prefix = getRestPrefix();
-            return UrlResourceFactory.create(prefix);
+            return UrlResourceFactory.create();
         }
-
     }
 
 }());

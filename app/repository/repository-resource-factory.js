@@ -5,56 +5,56 @@
         .module('otusDomainClient')
         .factory('RepositoryResourceFactory', RepositoryResourceFactory);
 
-    RepositoryResourceFactory.$inject = ['$resource', '$window'];
+    RepositoryResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
 
-    function RepositoryResourceFactory($resource, $window) {
+    function RepositoryResourceFactory($resource, DomainRestResourceContext) {
         var SUFFIX = '/repository';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
             return $resource({}, {}, {
                 validateConnection: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/connection',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/connection',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 validateCredentials: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/credentials',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/credentials',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 validateDatabase: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/validate/database',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/database',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 getByRepositoryName: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/get',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/get',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 connect: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/connect',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/connect',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 create: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/create',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/create',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 }
             });

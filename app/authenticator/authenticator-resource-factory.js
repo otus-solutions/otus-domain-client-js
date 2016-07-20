@@ -5,28 +5,28 @@
         .module('otusDomainClient')
         .factory('AuthenticatorResourceFactory', AuthenticatorResourceFactory);
 
-    AuthenticatorResourceFactory.$inject = ['$resource', '$window'];
+    AuthenticatorResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
 
-    function AuthenticatorResourceFactory($resource, $window) {
+    function AuthenticatorResourceFactory($resource, DomainRestResourceContext) {
         var SUFFIX = '/authentication';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
             return $resource({}, {}, {
                 authenticate: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX,
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 },
                 invalidate: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/invalidate',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/invalidate',
                     headers: {
-                        'Authorization': 'Bearer ' + $window.sessionStorage.getItem('token')
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
                 }
             });
