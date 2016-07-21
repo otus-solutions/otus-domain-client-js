@@ -5,9 +5,9 @@
         .module('otusDomainClient')
         .service('DomainRestResourceContext', DomainRestResourceContext);
 
-    DomainRestResourceContext.$inject = ['$window', 'UrlParser'];
+    DomainRestResourceContext.$inject = ['$window'];
 
-    function DomainRestResourceContext($window, UrlParser) {
+    function DomainRestResourceContext($window) {
         var HOSTNAME = 'http://' + $window.location.hostname;
         var CONTEXT = '/otus-domain-rest';
         var VERSION = '/v01';
@@ -25,11 +25,19 @@
         self.getSecurityToken = getSecurityToken;
         self.removeSecurityToken = removeSecurityToken;
 
+        init();
+
+        function init() {
+            TOKEN = $window.sessionStorage['domain-user-tk'];
+        }
+
         function removeSecurityToken() {
+            delete $window.sessionStorage['domain-user-tk'];
             TOKEN = '';
         }
 
         function setSecurityToken(securityToken) {
+            $window.sessionStorage['domain-user-tk'] = securityToken;
             TOKEN = securityToken;
         }
 
