@@ -16,7 +16,12 @@
         self.getOtusProjectResource = getOtusProjectResource;
         self.getUrlResource = getUrlResource;
         self.setSecurityToken = setSecurityToken;
-	self.removeSecurityToken = removeSecurityToken;
+        self.removeSecurityToken = removeSecurityToken;
+        self.isLogged = isLogged;
+
+        function isLogged() {
+            return DomainRestResourceContext.hasToken();
+        }
 
         function setSecurityToken(securityToken) {
             DomainRestResourceContext.setSecurityToken(securityToken);
