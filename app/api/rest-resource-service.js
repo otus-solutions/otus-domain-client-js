@@ -18,6 +18,11 @@
         self.setSecurityToken = setSecurityToken;
         self.removeSecurityToken = removeSecurityToken;
         self.isLogged = isLogged;
+        self.setHostname = setHostname;
+
+        function setHostname(hostname) {
+            DomainRestResourceContext.setHostname(hostname);
+        }
 
         function isLogged() {
             return DomainRestResourceContext.hasToken();
