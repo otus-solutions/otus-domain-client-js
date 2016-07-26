@@ -48,6 +48,11 @@
             }
         }
 
+        function setUrl(url) {
+            var parser = UrlParser.parser(url);
+            HOSTNAME = parser.origin;
+        }
+
         function removeSecurityToken() {
             delete $window.sessionStorage[TOKEN_USER_NAME];
         }
