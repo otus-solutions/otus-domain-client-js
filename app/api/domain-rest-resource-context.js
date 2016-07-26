@@ -8,11 +8,12 @@
     DomainRestResourceContext.$inject = ['$window', 'UrlParser'];
 
     function DomainRestResourceContext($window, UrlParser) {
-        var HOSTNAME = 'http://' + $window.location.hostname;
-        var CONTEXT = '/otus-domain-rest';
-        var VERSION = '/v01';
-
         var self = this;
+        var TOKEN_USER_NAME = 'dutk';
+        var HOSTNAME;
+        var CONTEXT;
+        var VERSION;
+
         self.setHostname = setHostname;
         self.setContext = setContext;
         self.setVersion = setVersion;
@@ -24,9 +25,23 @@
         self.getSecurityToken = getSecurityToken;
         self.removeSecurityToken = removeSecurityToken;
         self.hasToken = hasToken;
+        self.init = init;
+        self.reset = reset;
+
+        self.init();
+
+        function init() {
+            HOSTNAME = 'http://' + $window.location.hostname;
+            CONTEXT = '/otus-domain-rest';
+            VERSION = '/v01';
+        }
+
+        function reset() {
+            HOSTNAME = '';
+        }
 
         function hasToken() {
-            if ($window.sessionStorage['domain-user-tk']) {
+            if ($window.sessionStorage[TOKEN_USER_NAME]) {
                 return true;
             } else {
                 return false;
@@ -34,15 +49,15 @@
         }
 
         function removeSecurityToken() {
-            delete $window.sessionStorage['domain-user-tk'];
+            delete $window.sessionStorage[TOKEN_USER_NAME];
         }
 
         function setSecurityToken(securityToken) {
-            $window.sessionStorage['domain-user-tk'] = securityToken;
+            $window.sessionStorage[TOKEN_USER_NAME] = securityToken;
         }
 
         function getSecurityToken() {
-            return $window.sessionStorage['domain-user-tk'];
+            return $window.sessionStorage[TOKEN_USER_NAME];
         }
 
         function setHostname(hostname) {
