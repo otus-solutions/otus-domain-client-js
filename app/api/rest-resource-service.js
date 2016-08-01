@@ -19,6 +19,11 @@
         self.removeSecurityToken = removeSecurityToken;
         self.isLogged = isLogged;
         self.setHostname = setHostname;
+        self.setUrl = setUrl;
+
+        function setUrl(url) {
+            DomainRestResourceContext.setUrl(url);
+        }
 
         function setHostname(hostname) {
             DomainRestResourceContext.setHostname(hostname);

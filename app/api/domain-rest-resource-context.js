@@ -27,6 +27,7 @@
         self.hasToken = hasToken;
         self.init = init;
         self.reset = reset;
+	self.setUrl = setUrl;
 
         self.init();
 
