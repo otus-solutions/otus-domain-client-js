@@ -56,6 +56,13 @@
                     headers: {
                         'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
                     }
+                },
+                current: {
+                    method: 'GET',
+                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/fetch/current',
+                    headers: {
+                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
+                    }
                 }
             });
         }
