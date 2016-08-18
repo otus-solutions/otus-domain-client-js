@@ -2,22 +2,27 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('UrlResourceFactory', UrlResourceFactory);
 
-    UrlResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
+    UrlResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function UrlResourceFactory($resource, DomainRestResourceContext) {
+    function UrlResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/url';
 
         var self = this;
         self.create = create;
 
         function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 isValidDomain: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 }
             });
         }

@@ -1,6 +1,6 @@
 (function() {
     'use strict';
 
-    angular.module('otusDomainClient', ['ngResource']);
+    angular.module('otus.domain.client', ['ngResource']);
 
 })();

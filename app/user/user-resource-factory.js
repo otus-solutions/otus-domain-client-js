@@ -2,67 +2,57 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('UserResourceFactory', UserResourceFactory);
 
-    UserResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
+    UserResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function UserResourceFactory($resource, DomainRestResourceContext) {
+    function UserResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/user';
 
         var self = this;
         self.create = create;
 
         function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 exists: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/exists',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/exists',
+                    headers: headers.json
                 },
                 create: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
                 logged: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
                 fetch: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/fetch',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/fetch',
+                    headers: headers.json
                 },
                 enable: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/enable',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/enable',
+                    headers: headers.json
                 },
                 disable: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/disable',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/disable',
+                    headers: headers.json
                 },
                 current: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/fetch/current',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/fetch/current',
+                    headers: headers.json
                 }
             });
         }

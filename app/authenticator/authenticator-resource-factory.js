@@ -2,32 +2,32 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('AuthenticatorResourceFactory', AuthenticatorResourceFactory);
 
-    AuthenticatorResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
+    AuthenticatorResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function AuthenticatorResourceFactory($resource, DomainRestResourceContext) {
+    function AuthenticatorResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/authentication';
 
         var self = this;
         self.create = create;
 
         function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 authenticate: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
                 invalidate: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/invalidate',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/invalidate',
+                    headers: headers.json
                 }
             });
         }
