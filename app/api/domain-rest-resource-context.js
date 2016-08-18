@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .service('DomainRestResourceContext', DomainRestResourceContext);
 
     DomainRestResourceContext.$inject = ['$window', 'UrlParser'];
@@ -27,7 +27,7 @@
         self.hasToken = hasToken;
         self.init = init;
         self.reset = reset;
-	self.setUrl = setUrl;
+        self.setUrl = setUrl;
 
         self.init();
 

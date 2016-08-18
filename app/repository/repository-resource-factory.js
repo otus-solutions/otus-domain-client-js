@@ -2,60 +2,52 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('RepositoryResourceFactory', RepositoryResourceFactory);
 
-    RepositoryResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
+    RepositoryResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function RepositoryResourceFactory($resource, DomainRestResourceContext) {
+    function RepositoryResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/repository';
 
         var self = this;
         self.create = create;
 
         function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 validateConnection: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/connection',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/validate/connection',
+                    headers: headers.json
                 },
                 validateCredentials: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/credentials',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/validate/credentials',
+                    headers: headers.json
                 },
                 validateDatabase: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/validate/database',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/validate/database',
+                    headers: headers.json
                 },
                 getByRepositoryName: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/get',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/get',
+                    headers: headers.json
                 },
                 connect: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/connect',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/connect',
+                    headers: headers.json
                 },
                 create: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/create',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/create',
+                    headers: headers.json
                 }
             });
         }

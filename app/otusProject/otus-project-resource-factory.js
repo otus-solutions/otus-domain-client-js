@@ -3,32 +3,32 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('OtusProjectResourceFactory', OtusProjectResourceFactory);
 
-    OtusProjectResourceFactory.$inject = ['$resource', 'DomainRestResourceContext'];
+    OtusProjectResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function OtusProjectResourceFactory($resource, DomainRestResourceContext) {
+    function OtusProjectResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/otus';
 
         var self = this;
         self.create = create;
 
         function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 register: {
                     method: 'POST',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX + '/register',
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX + '/register',
+                    headers: headers.json
                 },
                 fetchAll: {
                     method: 'GET',
-                    url: DomainRestResourceContext.getRestPrefix() + SUFFIX,
-                    headers: {
-                        'Authorization': 'Bearer ' + DomainRestResourceContext.getSecurityToken()
-                    }
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 }
             });
         }

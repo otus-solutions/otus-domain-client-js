@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .service('UrlParser', UrlParser);
 
     function UrlParser() {
