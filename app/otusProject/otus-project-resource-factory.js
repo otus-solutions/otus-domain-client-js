@@ -22,12 +22,12 @@
             return $resource({}, {}, {
                 register: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/register',
+                    url: restPrefix + SUFFIX,
                     headers: headers.json
                 },
-                fetchAll: {
+                list: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX,
+                    url: restPrefix + SUFFIX + '/list',
                     headers: headers.json
                 }
             });
