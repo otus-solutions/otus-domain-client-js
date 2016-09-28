@@ -24,9 +24,9 @@
                     url: restPrefix + SUFFIX + '/ready',
                     headers: headers.json
                 },
-                validation: {
+                validationEmail: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validation',
+                    url: restPrefix + SUFFIX + '/validation/email',
                     headers: headers.json
                 },
                 config: {

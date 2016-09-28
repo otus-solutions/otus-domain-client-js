@@ -19,9 +19,9 @@
             var headers = HeaderBuilderFactory.create(token);
 
             return $resource({}, {}, {
-                exists: {
+                exist: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/exists',
+                    url: restPrefix + SUFFIX + '/exist',
                     headers: headers.json
                 },
                 create: {
@@ -34,9 +34,9 @@
                     url: restPrefix + SUFFIX,
                     headers: headers.json
                 },
-                fetch: {
+                list: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/fetch',
+                    url: restPrefix + SUFFIX + '/list',
                     headers: headers.json
                 },
                 enable: {

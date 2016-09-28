@@ -29,24 +29,14 @@
                     url: restPrefix + SUFFIX + '/validate/credentials',
                     headers: headers.json
                 },
-                validateDatabase: {
-                    method: 'GET',
-                    url: restPrefix + SUFFIX + '/validate/database',
-                    headers: headers.json
-                },
                 getByRepositoryName: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/get',
+                    url: restPrefix + SUFFIX,
                     headers: headers.json
                 },
-                connect: {
-                    method: 'POST',
-                    url: restPrefix + SUFFIX + '/connect',
-                    headers: headers.json
-                },
-                create: {
-                    method: 'POST',
-                    url: restPrefix + SUFFIX + '/create',
+                list: {
+                    method: 'GET',
+                    url: restPrefix + SUFFIX + '/list',
                     headers: headers.json
                 }
             });
