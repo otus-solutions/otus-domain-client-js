@@ -51,7 +51,7 @@
                 },
                 current: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/fetch/current',
+                    url: restPrefix + SUFFIX + '/current',
                     headers: headers.json
                 }
             });
