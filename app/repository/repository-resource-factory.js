@@ -2,42 +2,42 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('RepositoryResourceFactory', RepositoryResourceFactory);
 
-    RepositoryResourceFactory.$inject = ['$resource'];
+    RepositoryResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function RepositoryResourceFactory($resource) {
+    function RepositoryResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/repository';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
                 validateConnection: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/connection'
+                    url: restPrefix + SUFFIX + '/validate/connection',
+                    headers: headers.json
                 },
                 validateCredentials: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/validate/credentials'
-                },
-                validateDatabase: {
-                    method: 'GET',
-                    url: restPrefix + SUFFIX + '/validate/database'
+                    url: restPrefix + SUFFIX + '/validate/credentials',
+                    headers: headers.json
                 },
                 getByRepositoryName: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/get'
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
-                connect: {
-                    method: 'POST',
-                    url: restPrefix + SUFFIX + '/connect'
-                },
-                create: {
-                    method: 'POST',
-                    url: restPrefix + SUFFIX + '/create'
+                list: {
+                    method: 'GET',
+                    url: restPrefix + SUFFIX + '/list',
+                    headers: headers.json
                 }
             });
         }

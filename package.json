@@ -1,6 +1,6 @@
 {
     "name": "otus-domain-client",
-    "version": "0.0.1-SNAPSHOT",
+    "version": "0.0.2-SNAPSHOT",
     "description": "Client JS",
     "keywords": [
         "otus",
@@ -17,15 +17,20 @@
         "url": "git@github.com:ccem-dev/otus-domain-client-js.git"
     },
     "scripts": {
-        "test": "karma start karma.conf.js",
+        "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
+        "test": "karma start karma.conf.js --single-run",
         "gulp": "gulp",
-        "karma": "karma"
+        "karma": "karma",
+        "build": "gulp compress"
     },
     "dependencies": {
         "angular": "^1.4.7",
         "angular-resource": "1.5.3"
     },
     "devDependencies": {
+        "gulp-sonar": "2.1.0",
+        "gulp-concat": "2.6.0",
+        "gulp-minify": "0.0.11",
         "angular-mocks": "^1.4.9",
         "concurrently": "^1.0.0",
         "gulp": "^3.9.1",
@@ -40,6 +45,7 @@
         "karma-phantomjs-launcher": "^0.2.3",
         "phantomjs": ">=1.9",
         "phantomjs-prebuilt": "^2.1.2",
-        "gulp-bump": "2.1.0"
+        "gulp-bump": "2.1.0",
+        "karma-coverage": "^1.0.0"
     }
 }

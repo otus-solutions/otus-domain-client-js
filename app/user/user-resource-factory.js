@@ -2,42 +2,57 @@
     'use strict';
 
     angular
-        .module('otusDomainClient')
+        .module('otus.domain.client')
         .factory('UserResourceFactory', UserResourceFactory);
 
-    UserResourceFactory.$inject = ['$resource'];
+    UserResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function UserResourceFactory($resource) {
+    function UserResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
         var SUFFIX = '/user';
 
         var self = this;
         self.create = create;
 
-        function create(restPrefix) {
+        function create() {
+            var restPrefix = DomainRestResourceContext.getRestPrefix();
+            var token = DomainRestResourceContext.getSecurityToken();
+            var headers = HeaderBuilderFactory.create(token);
+
             return $resource({}, {}, {
-                exists: {
+                exist: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/exists'
+                    url: restPrefix + SUFFIX + '/exist',
+                    headers: headers.json
                 },
                 create: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
                 logged: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX,
+                    headers: headers.json
                 },
-                fetch: {
+                list: {
                     method: 'GET',
-                    url: restPrefix + SUFFIX + '/fetch'
+                    url: restPrefix + SUFFIX + '/list',
+                    headers: headers.json
                 },
                 enable: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/enable'
+                    url: restPrefix + SUFFIX + '/enable',
+                    headers: headers.json
                 },
                 disable: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX + '/disable'
+                    url: restPrefix + SUFFIX + '/disable',
+                    headers: headers.json
+                },
+                current: {
+                    method: 'GET',
+                    url: restPrefix + SUFFIX + '/current',
+                    headers: headers.json
                 }
             });
         }

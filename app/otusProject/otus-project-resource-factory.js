@@ -1,14 +1,15 @@
 (function() {
+
     'use strict';
 
     angular
         .module('otus.domain.client')
-        .factory('AuthenticatorResourceFactory', AuthenticatorResourceFactory);
+        .factory('OtusProjectResourceFactory', OtusProjectResourceFactory);
 
-    AuthenticatorResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
+    OtusProjectResourceFactory.$inject = ['$resource', 'DomainRestResourceContext', 'otus.domain.client.HeaderBuilderFactory'];
 
-    function AuthenticatorResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
-        var SUFFIX = '/authentication';
+    function OtusProjectResourceFactory($resource, DomainRestResourceContext, HeaderBuilderFactory) {
+        var SUFFIX = '/otus';
 
         var self = this;
         self.create = create;
@@ -19,14 +20,14 @@
             var headers = HeaderBuilderFactory.create(token);
 
             return $resource({}, {}, {
-                authenticate: {
+                register: {
                     method: 'POST',
                     url: restPrefix + SUFFIX,
                     headers: headers.json
                 },
-                invalidate: {
-                    method: 'POST',
-                    url: restPrefix + SUFFIX + '/invalidate',
+                list: {
+                    method: 'GET',
+                    url: restPrefix + SUFFIX + '/list',
                     headers: headers.json
                 }
             });

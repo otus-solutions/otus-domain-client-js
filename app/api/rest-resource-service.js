@@ -1,58 +1,69 @@
-    (function() {
-        'use strict';
+(function() {
+    'use strict';
 
-        angular
-            .module('otusDomainClient')
-            .service('RestResourceService', RestResourceService);
+    angular
+        .module('otus.domain.client')
+        .service('RestResourceService', RestResourceService);
 
-        RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory'];
+    RestResourceService.$inject = ['InstallerResourceFactory', 'AuthenticatorResourceFactory', 'UserResourceFactory', 'RepositoryResourceFactory', 'OtusProjectResourceFactory', 'UrlResourceFactory', 'DomainRestResourceContext'];
 
-        function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory) {
-            var HOSTNAME = 'http://' + window.location.hostname;
-            var CONTEXT = '/otus-domain-rest';
-            var VERSION = '/v01';
+    function RestResourceService(InstallerResourceFactory, AuthenticatorResourceFactory, UserResourceFactory, RepositoryResourceFactory, OtusProjectResourceFactory, UrlResourceFactory, DomainRestResourceContext) {
+        var self = this;
+        self.getInstallerResource = getInstallerResource;
+        self.getAuthenticatorResource = getAuthenticatorResource;
+        self.getUserResource = getUserResource;
+        self.getRepositoryResource = getRepositoryResource;
+        self.getOtusProjectResource = getOtusProjectResource;
+        self.getUrlResource = getUrlResource;
+        self.setSecurityToken = setSecurityToken;
+        self.removeSecurityToken = removeSecurityToken;
+        self.isLogged = isLogged;
+        self.setHostname = setHostname;
+        self.setUrl = setUrl;
 
-            var self = this;
-            self.getInstallerResource = getInstallerResource;
-            self.getAuthenticatorResource = getAuthenticatorResource;
-            self.getUserResource = getUserResource;
-            self.getRepositoryResource = getRepositoryResource;
-
-            function getRestPrefix() {
-                return HOSTNAME + CONTEXT + VERSION;
-            }
-
-            function getHostName() {
-                return HOSTNAME;
-            }
-
-            function getContext() {
-                return CONTEXT;
-            }
-
-            function getVersion() {
-                return VERSION;
-            }
-
-            function getInstallerResource() {
-                var prefix = getRestPrefix();
-                return InstallerResourceFactory.create(prefix);
-            }
-
-            function getAuthenticatorResource() {
-                var prefix = getRestPrefix();
-                return AuthenticatorResourceFactory.create(prefix);
-            }
-
-            function getUserResource() {
-                var prefix = getRestPrefix();
-                return UserResourceFactory.create(prefix);
-            }
-
-            function getRepositoryResource() {
-                var prefix = getRestPrefix();
-                return RepositoryResourceFactory.create(prefix);
-            }
+        function setUrl(url) {
+            DomainRestResourceContext.setUrl(url);
         }
 
-    }());
+        function setHostname(hostname) {
+            DomainRestResourceContext.setHostname(hostname);
+        }
+
+        function isLogged() {
+            return DomainRestResourceContext.hasToken();
+        }
+
+        function setSecurityToken(securityToken) {
+            DomainRestResourceContext.setSecurityToken(securityToken);
+        }
+
+        function removeSecurityToken() {
+            DomainRestResourceContext.removeSecurityToken();
+        }
+
+        function getInstallerResource() {
+            return InstallerResourceFactory.create();
+        }
+
+        function getAuthenticatorResource() {
+            return AuthenticatorResourceFactory.create();
+        }
+
+        function getUserResource() {
+            return UserResourceFactory.create();
+        }
+
+        function getRepositoryResource() {
+            return RepositoryResourceFactory.create();
+        }
+
+        function getOtusProjectResource() {
+            return OtusProjectResourceFactory.create();
+        }
+
+        function getUrlResource() {
+            return UrlResourceFactory.create();
+        }
+    }
+
+}());
