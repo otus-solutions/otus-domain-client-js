@@ -1,6 +1,6 @@
 {
     "name": "otus-domain-client",
-    "version": "0.0.2-SNAPSHOT",
+    "version": "1.1.0",
     "description": "Client JS",
     "keywords": [
         "otus",
@@ -21,7 +21,8 @@
         "test": "karma start karma.conf.js --single-run",
         "gulp": "gulp",
         "karma": "karma",
-        "build": "gulp compress"
+        "build": "gulp compress",
+        "production": "npm install && npm test && npm run build && npm prune --production"
     },
     "dependencies": {
         "angular": "^1.4.7",
